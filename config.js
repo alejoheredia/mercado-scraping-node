@@ -43,7 +43,7 @@ const tiendas = {
   }
 }
 
-export default {
+exports.config =  {
   "start_in_page": 1,
   "start_in_section_index": 0,
   "file_headers": "marca,nombre_producto,precio,cantidad,precio_unidad,unidad,seccion\n",
