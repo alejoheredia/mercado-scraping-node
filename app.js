@@ -2,7 +2,8 @@ const {config} = require('./config')
 const path = require('path')
 const {existsSync} = require('fs')
 const {mkdir} = require('fs/promises')
-const {createFile, argsParser} = require('./utils');
+const {createFile, argsParser} = require('./utils')
+const { MercadoScraper } = require('./scraper');
 
 (async () => {
   const args = process.argv.splice(2)
@@ -23,5 +24,9 @@ const {createFile, argsParser} = require('./utils');
   }
 
   const fileName = await createFile(defaultOutputPath, parsedArgs.tienda)
+
+  const newScraper = new MercadoScraper(scraperConfig, fileName)
+  await newScraper.initBrowser()
+  await newScraper.scrape()
 
 })()
