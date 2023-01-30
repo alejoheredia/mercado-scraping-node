@@ -39,6 +39,10 @@ class MercadoScraper{
     }
   }
 
+  elementReturnText(node){
+    return node.innerText
+  }
+
   async scrape(){
     
     await appendFile(this.fileName, this.sconfig['file_headers'])
@@ -101,10 +105,15 @@ class MercadoScraper{
             throw new RetryException()
           }
 
-          const productBrand = await (await productSectionContent.$(this.tiendaSelectors['product_brand'])).evaluate( node => node.innerText)
-          const productName = await (await productSectionContent.$(this.tiendaSelectors['product_name'])).evaluate( node => node.innerText)
-          const productPrice = (await (await productSectionContent.$(this.tiendaSelectors['product_price'])).evaluate( node => node.innerText)).split('$')
-          const productPriceUnit = (await (await productSectionContent.$(this.tiendaSelectors['product_price_unit'])).evaluate( node => node.innerText)).split(' a ')
+          const productBrandElement = await productSectionContent.$(this.tiendaSelectors['product_brand'])
+          const productNameElement = await productSectionContent.$(this.tiendaSelectors['product_name'])
+          const productPriceElement = await productSectionContent.$(this.tiendaSelectors['product_price'])
+          const productPriceUnitElement = await productSectionContent.$(this.tiendaSelectors['product_price_unit'])
+
+          const productBrand = productBrandElement ? await productBrandElement.evaluate(this.elementReturnText) : null
+          const productName = productNameElement ? await productNameElement.evaluate(this.elementReturnText) : null
+          const productPrice = productPriceElement ? (await productPriceElement.evaluate(this.elementReturnText)).split('$') : null
+          const productPriceUnit = productPriceUnitElement ? (await productPriceUnitElement.evaluate(this.elementReturnText)).split(' a ') : null
           
           const [productUnitLabel, productPriceTotal, productUnitPrice] = this.calcProductQuantity(productPrice, productPriceUnit)
           const productQuantity = productPriceTotal ? Math.round(productPriceTotal/productUnitPrice) : null
