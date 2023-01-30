@@ -19,7 +19,7 @@ const tiendas = {
     "selectors": {
       "first_element": ".vtex-search-result-3-x-totalProductsMessage",
       "items_list_container": "#gallery-layout-container",
-      "items_list_class": ".vtex-search-result-3-x-galleryItem vtex-search-result-3-x-galleryItem--normal vtex-search-result-3-x-galleryItem--one pa4",
+      "items_list_class": ".vtex-search-result-3-x-galleryItem",
       "product_section_content": "section a article div.vtex-flex-layout-0-x-flexRowContent--product-info-down-mobile",
       "product_brand": "span.vtex-product-summary-2-x-productBrandName",
       "product_name": "span.vtex-store-components-3-x-productBrand",
